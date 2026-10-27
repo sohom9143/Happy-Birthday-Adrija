@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>শুভ জন্মদিন অদ্রিজা পাগলি! 🎂✨</title>
+    <!-- Google Fonts for Bengali & English -->
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;500;700&family=Galada&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Canvas Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <style>
+        :root {
+            --primary: #ff4d79;
+            --secondary: #ff9a8b;
+            --dark: #1a0b16;
+            --glass: rgba(255, 255, 255, 0.12);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: radial-gradient(circle at top, #3b0d2c, #12040e);
+            color: #fff;
+            font-family: 'Hind Siliguri', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Welcome Overlay Screen */
+        #overlay {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, #1f0518, #420c33);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            transition: opacity 1s ease, visibility 1s ease;
+        }
+
+        .gift-btn {
+            background: linear-gradient(45deg, #ff416c, #ff4b2b);
+            border: none;
+            padding: 18px 40px;
+            color: white;
+            font-size: 1.4rem;
+            font-family: 'Hind Siliguri', sans-serif;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 0 30px rgba(255, 65, 108, 0.6);
+            animation: pulse 1.8s infinite;
+            margin-top: 25px;
+            transition: transform 0.3s;
+        }
+
+        .gift-btn:hover {
+            transform: scale(1.08);
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 65, 108, 0.7); }
+            70% { box-shadow: 0 0 0 25px rgba(255, 65, 108, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 65, 108, 0); }
+        }
+
+        /* Floating Background Hearts/Stars */
+        .floating-bg {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .float-item {
+            position: absolute;
+            bottom: -50px;
+            font-size: 1.5rem;
+            opacity: 0.6;
+            animation: floatUp linear infinite;
+        }
+
+        @keyframes floatUp {
+            to {
+                transform: translateY(-110vh) rotate(360deg);
+            }
+        }
+
+        /* Main Container */
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        h1.main-title {
+            font-family: 'Galada', cursive;
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            background: linear-gradient(to right, #ff9a9e, #fecfef, #ff6b8b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 5px 25px rgba(255, 107, 139, 0.4);
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #ffb8d1;
+            margin-bottom: 35px;
+        }
+
+        /* Music & Animated Lyrics Card */
+        .music-card {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
+            padding: 28px 20px;
+            margin-bottom: 45px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+
+        .music-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 15px;
+            padding: 0 10px;
+            color: #ff7597;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .equalizer {
+            display: flex;
+            gap: 4px;
+            height: 20px;
+            align-items: flex-end;
+        }
+
+        .bar {
+            width: 4px;
+            background: #ff4d79;
+            border-radius: 2px;
+            animation: bounce 0.6s infinite ease-in-out alternate;
+        }
+        .bar:nth-child(2) { animation-delay: 0.2s; }
+        .bar:nth-child(3) { animation-delay: 0.4s; }
+        .bar:nth-child(4) { animation-delay: 0.1s; }
+
+        @keyframes bounce {
+            0% { height: 5px; }
+            100% { height: 20px; }
+        }
+
+        .timer-badge {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.85rem;
+            background: rgba(255, 77, 121, 0.25);
+            padding: 5px 12px;
+            border-radius: 20px;
+            color: #ffd6e0;
+            border: 1px solid rgba(255, 77, 121, 0.5);
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            width: 100%;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            margin-bottom: 18px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #ff4d79, #ffbe0b);
+            transition: width 0.15s linear;
+        }
+
+        /* Animated Lyrics Stage */
+        .lyrics-stage {
+            font-family: 'Poppins', sans-serif;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 25px 15px;
+            border-radius: 18px;
+            border: 1px solid rgba(255, 77, 121, 0.35);
+            min-height: 230px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lyric-line {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.2);
+            transition: all 0.45s cubic-bezier(0.25, 1, 0.5, 1);
+            transform: scale(0.92);
+            filter: blur(1px);
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+        }
+
+        /* Line that has already been sung */
+        .lyric-line.shown {
+            opacity: 0.45;
+            max-height: 50px;
+            filter: blur(0.3px);
+            transform: scale(0.95);
+        }
+
+        /* Currently singing active line synced to timeline */
+        .lyric-line.active {
+            opacity: 1;
+            max-height: 70px;
+            font-size: clamp(1.15rem, 3.5vw, 1.45rem);
+            font-weight: 700;
+            color: #fff;
+            filter: blur(0px);
+            transform: scale(1.06);
+            text-shadow: 0 0 15px #ff4d79, 0 0 30px #ff758f;
+            margin: 6px 0;
+        }
+
+        .lyrics-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 12px;
+            font-size: 0.8rem;
+            color: #ffb3c6;
+        }
+
+        .sync-mode-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: #ffe5ec;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .sync-mode-btn:hover {
+            background: rgba(255, 77, 121, 0.4);
+        }
+
+        /* Photo Gallery */
+        .section-title {
+            font-size: 1.8rem;
+            color: #ff9ebb;
+            margin: 40px 0 25px;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .polaroid {
+            background: #fff;
+            padding: 12px 12px 28px 12px;
+            border-radius: 12px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            color: #333;
+        }
+
+        .polaroid:nth-child(odd) { transform: rotate(-2deg); }
+        .polaroid:nth-child(even) { transform: rotate(2deg); }
+
+        .polaroid:hover {
+            transform: rotate(0deg) scale(1.05);
+            box-shadow: 0 18px 40px rgba(255, 77, 121, 0.5);
+            z-index: 5;
+        }
+
+        .polaroid img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+
+        .polaroid p {
+            margin-top: 12px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: #c9184a;
+        }
+
+        /* Interactive Birthday Cake */
+        .cake-section {
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            border-radius: 24px;
+            padding: 40px 20px;
+            margin: 45px 0;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .cake-wrapper {
+            position: relative;
+            width: 200px;
+            height: 180px;
+            margin: 30px auto 15px;
+            cursor: pointer;
+        }
+
+        .plate {
+            position: absolute;
+            bottom: 0;
+            left: -15px;
+            width: 230px;
+            height: 15px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+
+        .layer-bottom {
+            position: absolute;
+            bottom: 15px;
+            left: 10px;
+            width: 180px;
+            height: 60px;
+            background: #ff758f;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .layer-top {
+            position: absolute;
+            bottom: 75px;
+            left: 30px;
+            width: 140px;
+            height: 50px;
+            background: #ffb3c1;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .icing {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 16px;
+            background: #fff0f3;
+            border-radius: 10px 10px 6px 6px;
+        }
+
+        .candle {
+            position: absolute;
+            bottom: 125px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 14px;
+            height: 40px;
+            background: repeating-linear-gradient(45deg, #fff, #fff 5px, #ff4d79 5px, #ff4d79 10px);
+            border-radius: 4px;
+        }
+
+        .flame {
+            position: absolute;
+            top: -22px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 16px;
+            height: 22px;
+            background: radial-gradient(circle, #fff 10%, #ffbe0b 50%, #fb5607 90%);
+            border-radius: 50% 50% 35% 35%;
+            box-shadow: 0 0 20px #ffbe0b, 0 0 40px #ffbe0b;
+            animation: flicker 0.15s infinite alternate;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        .flame.off {
+            opacity: 0;
+            transform: translateX(-50%) scale(0);
+        }
+
+        @keyframes flicker {
+            0% { transform: translateX(-50%) scale(1) rotate(-2deg); }
+            100% { transform: translateX(-50%) scale(1.08) rotate(2deg); }
+        }
+
+        .cake-instruction {
+            font-size: 1.15rem;
+            color: #ffe5ec;
+            margin-top: 15px;
+            font-weight: 500;
+        }
+
+        /* Personal Note Card */
+        .note-card {
+            background: linear-gradient(145deg, rgba(255, 77, 121, 0.18), rgba(0, 0, 0, 0.45));
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 158, 187, 0.35);
+            border-radius: 24px;
+            padding: 35px 30px;
+            text-align: left;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            position: relative;
+            margin-top: 40px;
+        }
+
+        .note-card h3 {
+            font-family: 'Galada', cursive;
+            font-size: 2rem;
+            color: #ff8fa3;
+            margin-bottom: 18px;
+        }
+
+        .note-text {
+            font-size: 1.25rem;
+            line-height: 1.9;
+            color: #fff0f3;
+            white-space: pre-line;
+        }
+
+        .signature {
+            text-align: right;
+            margin-top: 25px;
+            font-weight: 700;
+            color: #ff758f;
+            font-size: 1.2rem;
+        }
+
+        .music-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #ff4d79;
+            border: none;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.3rem;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(255, 77, 121, 0.6);
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background Audio with Loop Enabled -->
+    <audio id="bg-music" loop preload="auto">
+        <source src="song.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Welcome Overlay -->
+    <div id="overlay">
+        <h1 style="font-family: 'Galada', cursive; font-size: 3rem; color: #ff8fa3;">অদ্রিজা পাগলি! 🎉</h1>
+        <p style="font-size: 1.2rem; color: #ffd6e0; max-width: 400px; margin-top: 10px;">
+            আজকের এই বিশেষ দিনটার জন্য তোর জন্য একটা ছোট্ট সারপ্রাইজ অপেক্ষা করছে...
+        </p>
+        <button class="gift-btn" onclick="startExperience()">🎁 সারপ্রাইজটি খোল 🎁</button>
+    </div>
+
+    <!-- Floating Background Decorations -->
+    <div class="floating-bg" id="floating-bg"></div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h1 class="main-title">শুভ জন্মদিন অদ্রিজা পাগলি! 🎂</h1>
+        <p class="subtitle">আজকের দিনটা শুধুই তোর, অনেক হাসিখুশি আর আনন্দে কাটুক! ✨💖</p>
+
+        <!-- Music & Timeline-Synced Animated Lyrics Box -->
+        <div class="music-card">
+            <div class="music-header">
+                <div class="header-left">
+                    <div class="equalizer">
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                    </div>
+                    <span>Dil Cheez Tujhe Dedi (Synced Loop) 🎶</span>
+                </div>
+                <div class="timer-badge" id="time-display">00:00</div>
+            </div>
+
+            <!-- Music Timeline Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            
+            <!-- Lyrics Stage -->
+            <div class="lyrics-stage" id="lyrics-stage">
+                <div class="lyric-line" id="line-0">✨ Rubaru jo tu aayi...</div>
+                <div class="lyric-line" id="line-1">💓 Dhadkan na sambhal paayi...</div>
+                <div class="lyric-line" id="line-2">💫 Ek hi ishaare pe...</div>
+                <div class="lyric-line" id="line-3">💖 Dil cheez tujhe dedi!</div>
+                <div class="lyric-line" id="line-4">🎶 Dedi... Dedi... Dil cheez tujhe dedi ✨</div>
+            </div>
+
+            <div class="lyrics-footer">
+                <span>— Arijit Singh & Ankit Tiwari (Airlift)</span>
+                <button class="sync-mode-btn" id="mode-btn" onclick="toggleSyncOffset()">
+                    🎯 Mode: Cut Ringtone (Starts at 0:00)
+                </button>
+            </div>
+        </div>
+
+        <!-- Photo Gallery -->
+        <h2 class="section-title">📸 আমাদের কিছু সুন্দর মুহূর্ত 📸</h2>
+        <div class="gallery">
+            <div class="polaroid">
+                <img src="pic1.jpg" alt="Our Selfie" onerror="this.src='https://placehold.co/400x500/ff758f/fff?text=Put+pic1.jpg+Here'">
+                <p>সেই স্পেশাল মুহূর্ত ✨</p>
+            </div>
+            <div class="polaroid">
+                <img src="pic2.jpg" alt="Adrija" onerror="this.src='https://placehold.co/400x500/ff758f/fff?text=Put+pic2.jpg+Here'">
+                <p>ফোনে ব্যস্ত পাগলি 📱😄</p>
+            </div>
+            <div class="polaroid">
+                <img src="pic3.jpg" alt="Adrija Side Pose" onerror="this.src='https://placehold.co/400x500/ff758f/fff?text=Put+pic3.jpg+Here'">
+                <p>মিষ্টি হাসি 🌸</p>
+            </div>
+        </div>
+
+        <!-- Interactive Cake Section -->
+        <div class="cake-section">
+            <h2 style="color: #ffb3c1; margin-bottom: 10px;">🎂 তোর বার্থডে কেক 🎂</h2>
+            <div class="cake-wrapper" onclick="blowCandle()">
+                <div class="candle">
+                    <div class="flame" id="flame"></div>
+                </div>
+                <div class="layer-top"><div class="icing"></div></div>
+                <div class="layer-bottom"><div class="icing"></div></div>
+                <div class="plate"></div>
+            </div>
+            <p class="cake-instruction" id="cake-msg">👆 কেকটার ওপর ক্লিক করে মোমবাতিটা নিভিয়ে একটা উইশ কর! ✨</p>
+        </div>
+
+        <!-- Personal Note -->
+        <div class="note-card">
+            <h3>প্রিয় অদ্রিজা পাগলি, 💌</h3>
+            <p class="note-text" id="typewriter-text"></p>
+            <div class="signature">— তোর বেস্ট ফ্রেন্ড 🤍</div>
+        </div>
+    </div>
+
+    <!-- Floating Mute/Unmute Button -->
+    <button class="music-toggle" onclick="toggleAudio()" id="audio-btn">🔊</button>
+
+    <script>
+        const audio = document.getElementById('bg-music');
+        const progressBar = document.getElementById('progress-bar');
+        const timeDisplay = document.getElementById('time-display');
+
+        // Exact timestamps based on the "Rubaru Jo Tu Aayi" Ringtone cadence
+        // 0.0s - 2.2s : Rubaru jo tu aayi
+        // 2.2s - 4.4s : Dhadkan na sambhal paayi
+        // 4.4s - 6.6s : Ek hi ishaare pe
+        // 6.6s - 9.2s : Dil cheez tujhe dedi
+        // 9.2s - 18.5s: Dedi... dedi... Dil cheez tujhe dedi (Beat & Hook)
+        const baseTimings = [
+            { id: 'line-0', start: 0.0, end: 2.2 },
+            { id: 'line-1', start: 2.2, end: 4.4 },
+            { id: 'line-2', start: 4.4, end: 6.6 },
+            { id: 'line-3', start: 6.6, end: 9.2 },
+            { id: 'line-4', start: 9.2, end: 18.5 }
+        ];
+
+        // যদি তোর song.mp3 ফাইলটা পুরো ৩৭ সেকেন্ডের স্ট্যাটাস হয় (যেখানে 18 সেকেন্ডে Rubaru শুরু হয়),
+        // তাহলে নিচের syncOffset = 18.0 করে দিবি অথবা পেজের নিচের বাটনে ক্লিক করবি!
+        let syncOffset = 0.0; 
+        let fallbackTimer = null;
+        let virtualTime = 0;
+
+        // Seamless Audio Looping
+        audio.loop = true;
+        audio.addEventListener('ended', function() {
+            this.currentTime = syncOffset;
+            this.play();
+        }, false);
+
+        // Update Lyrics based on current time (in seconds)
+        function syncLyricsWithTime(currentTime) {
+            // Adjust for offset if using the full 37s status audio
+            let relativeTime = currentTime - syncOffset;
+            if (relativeTime < 0) {
+                // Intro playing before 18s
+                relativeTime = currentTime % 18.0;
+            }
+
+            // Format timer badge
+            let mins = Math.floor(currentTime / 60);
+            let secs = Math.floor(currentTime % 60);
+            timeDisplay.innerText = `${mins < 10 ? '0'+mins : mins}:${secs < 10 ? '0'+secs : secs}`;
+
+            // Find which lyric matches the exact timestamp
+            let activeIndex = -1;
+            for (let i = 0; i < baseTimings.length; i++) {
+                if (relativeTime >= baseTimings[i].start && relativeTime < baseTimings[i].end) {
+                    activeIndex = i;
+                    break;
+                }
+            }
+
+            // Apply active & shown classes
+            baseTimings.forEach((item, index) => {
+                const el = document.getElementById(item.id);
+                if (activeIndex === 0 && index > 0) {
+                    // Reset previous loop lines when restarting at line 0
+                    el.classList.remove('active', 'shown');
+                }
+                if (index < activeIndex) {
+                    el.classList.remove('active');
+                    el.classList.add('shown');
+                } else if (index === activeIndex) {
+                    el.classList.add('active', 'shown');
+                }
+            });
+        }
+
+        // Listen to real-time audio playback
+        audio.addEventListener('timeupdate', () => {
+            if (!audio.paused && audio.duration) {
+                const pct = (audio.currentTime / audio.duration) * 100;
+                progressBar.style.width = pct + '%';
+                syncLyricsWithTime(audio.currentTime);
+            }
+        });
+
+        // Switch between 0:00 Ringtone Cut and 0:18 Status Edit
+        function toggleSyncOffset() {
+            const btn = document.getElementById('mode-btn');
+            if (syncOffset === 0.0) {
+                syncOffset = 18.0;
+                btn.innerText = "🎯 Mode: 37s Status Clip (Rubaru at 0:18)";
+                if (!audio.paused) audio.currentTime = 18.0;
+            } else {
+                syncOffset = 0.0;
+                btn.innerText = "🎯 Mode: Cut Ringtone (Starts at 0:00)";
+                if (!audio.paused) audio.currentTime = 0.0;
+            }
+        }
+
+        const personalNote = `আমি জানি যে আজকে তোর বার্থডে, তাই বেশি কিছু বলবো না। জাস্ট এটা বলবো নিজের জন্মদিন ভালো করে কাটা। 
+
+আর মনে আছে আমাদের প্রথমবার যখন কথা বলেছিলাম, তুই আমাকে বিশ্বাস করতিস না কিছু বলতে? আর আজকে দেখ! 
+
+I know যে তুই আমাদের মধ্যে একটা ডিসট্যান্স মেইনটেইন করিস, খুব বেশি কাছের মনে করিস না, বাট আমার মনে হয় তুই আমার সব থেকে ভালো বেস্ট ফ্রেন্ড হবি। 
+
+সবসময় এইভাবেই হাসিখুশি থাকিস পাগলি! শুভ জন্মদিন! 🎉💖`;
+
+        // Create floating hearts & balloons
+        const bgContainer = document.getElementById('floating-bg');
+        const symbols = ['🎈', '💖', '✨', '🌸', '🎂', '🎉'];
+        for (let i = 0; i < 22; i++) {
+            let span = document.createElement('span');
+            span.className = 'float-item';
+            span.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+            span.style.left = Math.random() * 100 + 'vw';
+            span.style.animationDuration = (Math.random() * 8 + 7) + 's';
+            span.style.animationDelay = (Math.random() * 5) + 's';
+            bgContainer.appendChild(span);
+        }
+
+        // Start Experience on Click
+        function startExperience() {
+            const overlay = document.getElementById('overlay');
+            overlay.style.opacity = '0';
+            setTimeout(() => overlay.style.visibility = 'hidden', 1000);
+
+            // Start playing song.mp3 and sync timeline
+            audio.play().catch(err => {
+                console.log("song.mp3 not found yet, running virtual timeline preview.");
+                // Fallback virtual timer with exact same timestamps if testing without song.mp3
+                fallbackTimer = setInterval(() => {
+                    virtualTime = (virtualTime + 0.1) % 18.0;
+                    progressBar.style.width = ((virtualTime / 18.0) * 100) + '%';
+                    syncLyricsWithTime(virtualTime);
+                }, 100);
+            });
+
+            // Launch Initial Confetti
+            confetti({
+                particleCount: 120,
+                spread: 80,
+                origin: { y: 0.6 }
+            });
+
+            // Start Typewriter effect for personal note
+            typeWriter(personalNote, 0);
+        }
+
+        // Typewriter Animation
+        function typeWriter(text, i) {
+            if (i < text.length) {
+                document.getElementById('typewriter-text').innerHTML += text.charAt(i);
+                setTimeout(() => typeWriter(text, i + 1), 35);
+            }
+        }
+
+        // Blow Candle Function
+        function blowCandle() {
+            const flame = document.getElementById('flame');
+            const msg = document.getElementById('cake-msg');
+            if (!flame.classList.contains('off')) {
+                flame.classList.add('off');
+                msg.innerHTML = "🎉 ইয়েএএ! শুভ জন্মদিন অদ্রিজা পাগলি! তোর সব স্বপ্ন পূরণ হোক! 🥳💖";
+                
+                var duration = 3 * 1000;
+                var end = Date.now() + duration;
+
+                (function frame() {
+                    confetti({
+                        particleCount: 6,
+                        angle: 60,
+                        spread: 55,
+                        origin: { x: 0 }
+                    });
+                    confetti({
+                        particleCount: 6,
+                        angle: 120,
+                        spread: 55,
+                        origin: { x: 1 }
+                    });
+                    if (Date.now() < end) {
+                        requestAnimationFrame(frame);
+                    }
+                }());
+            }
+        }
+
+        // Toggle Audio
+        function toggleAudio() {
+            const btn = document.getElementById('audio-btn');
+            if (audio.paused) {
+                audio.play();
+                btn.innerText = '🔊';
+            } else {
+                audio.pause();
+                btn.innerText = '🔇';
+            }
+        }
+    </script>
+</body>
+</html>
